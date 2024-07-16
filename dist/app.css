@@ -300,4 +300,8 @@ button, .track-progress, .prev-track, .next-track, .playpause-track, #dp-reserve
 .splide :focus {
   outline: none;
 }
+
+.splide {
+  height: 50dvh;
+}
 /*# sourceMappingURL=app.css.map */

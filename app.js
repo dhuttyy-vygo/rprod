@@ -1,15 +1,16 @@
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import { Vimeo } from "vimeo";
+import Player from '@vimeo/player';
+import Splide, { RequestInterval } from "@splidejs/splide";
 
 
 var Qe = gsap;
 var Sc = ScrollTrigger;
 
 
-// alert("loaded"); //
 
 (() => {
+  
     var navinit = function () {
       const toggleBtn = document.querySelector(".dp-menu-toggle"),
         backdrop = document.querySelector(".dp-menu-backdrop"),
@@ -20,7 +21,7 @@ var Sc = ScrollTrigger;
   
       var opened = false;
   
-      // Timeline for showing the menu
+      
       var tlShow = Qe.timeline({ paused: true });
       tlShow.set(menuBox, { display: "block" }, 0);
       tlShow.fromTo(backdrop, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0);
@@ -86,7 +87,7 @@ var Sc = ScrollTrigger;
           const dataVideo = videoItem.getAttribute("data-player");
           iframe.src = `https://player.vimeo.com/video/${dataVideo}?autoplay=1&muted=0`;
   
-          vplayer = new Vimeo.Player(iframe);
+          vplayer = new Player(iframe);
           vplayer.ready().then(() => {
             vplayer.play();
           });
@@ -111,74 +112,80 @@ var Sc = ScrollTrigger;
         }
       };
     };
-  
-    document.addEventListener("DOMContentLoaded", () => {
-      navinit(), vimeoModal();
-  
-      Webflow.push(function () {
-        $(".rp-video-item").click(function (e) {
-          e.preventDefault();
-          $("body").css("overflow", "hidden");
-        });
-  
-        $(".rp-modal-backdrop").click(function (e) {
-          e.preventDefault();
-          $("body").css("overflow", "auto");
-        });
-  
-        // New code starts here
-        $("#play").on("click", function () {
-          let videoPop = $("[video-modal]");
-          Qe.to(videoPop, {
+
+    var homeModal =  () => {
+
+      const e = document.getElementById('player'),
+        t = document.getElementById('play'),
+        o = document.querySelector("[video-modal]"),
+        a = document.getElementById("pause");
+
+
+  if (!e || !t || !o || !a) {
+    console.error("One or more elements not found");
+    return;
+  }
+
+        var close = () => {
+          e.pause(), Qe.to(o, {
+            autoAlpha: 0,
+            duration: .3,
+            ease: "power2.out"
+          })
+        };
+
+        t.addEventListener("click", function () {
+          e.play(), Qe.to(o, {
             autoAlpha: 1,
             duration: 0.7,
-            ease: "power1.easeInOut",
+            ease: "power1.easeInOut"
           });
         });
-  
-        $("#pause").on("click", function () {
-          let videoPop = $("[video-modal]");
-          Qe.to(videoPop, {
-            autoAlpha: 0,
-            duration: 0.3,
-            ease: "power1.easeInOut",
-          });
+        a.addEventListener("click", function () {
+          close()}),
+        e.addEventListener("webkitendfullscreen", function () {
+          close();
         });
+      }
+
+
+      var splideInit = () => {
+        const e = document.querySelector(".slide");
+        
+        if (!e) {
+          return;
+        }
+
+        new Splide( e, {
+          start: 0,  
+          perPage: "auto",
+          perMove: 1,
+          autoplay: !1,
+          interval: 2500,
+          type   : 'loop',
+          focus  : 'left',
+          flickPower: 450 ,
+          autoHeight: !0,
+          breakpoints: {
+            767: {
+              perPage: 1,
+            }
+          }
+        } ).mount();
+      }
   
-        Webflow.push(function () {
-          $("#play").click(function (e) {
-            e.preventDefault();
-            $("body").css("overflow", "hidden");
-          });
-  
-          $("#pause").click(function (e) {
-            e.preventDefault();
-            $("body").css("overflow", "auto");
-          });
-        });
-  
-        let e = document.getElementById("player"),
-          t = document.getElementById("play"),
-          o = $("[video-modal]"),
-          a = document.getElementById("pause");
-        t.addEventListener("click", function () {
-          e.play();
-        }),
-          a.addEventListener("click", function () {
-            e.pause(), (e.currentTime = 0);
-          }),
-          e.addEventListener("webkitendfullscreen", function () {
-            e.pause(),
-              (e.currentTime = 0),
-              Qe.to(o, {
-                autoAlpha: 0,
-                duration: 0.3,
-                ease: "power1.easeInOut",
-              });
-          });
-        // New code ends here
-      });
+    document.addEventListener("DOMContentLoaded", () => {
+      navinit(), vimeoModal(), homeModal(), splideInit();
+
       
+      
+      
+      $('.fake-arrow').click(function() {
+        $('.splide__arrow.splide__arrow--next').click();
+      });
+  
+      
+
       $('.link_container').hover(function() {
         let textOne = $(this).find('.link_textt').eq(0).text();
         $(this).find('.link_textt.is--2').text(textOne);
@@ -201,54 +208,64 @@ var Sc = ScrollTrigger;
   
     
   
-    let object = {
-      value: 1,
-    };
-  
-    let tlMarque = Qe.timeline({ repeat: -1 });
-    tlMarque.fromTo(
-      ".rp-marquee-item",
-      {
-        xPercent: 0,
-      },
-      {
-        xPercent: -50,
-        duration: 60,
-        ease: "none",
+    var logoMarquee = function () {
+      const item = document.querySelector(".rp-marquee-item");
+
+      if (item ===0 ) {
+        return;
       }
-    );
-  
-    $(".rp-marquee-item").on("mouseenter", function () {
-      Qe.fromTo(
-        object,
+
+      let object = {
+        value: 1,
+      };
+    
+      let tlMarque = Qe.timeline({ repeat: -1 });
+      tlMarque.fromTo(
+        item,
         {
-          value: 1,
+          xPercent: 0,
         },
         {
-          value: 0,
-          duration: 1.2,
-          onUpdate: () => {
-            tlMarque.timeScale(object.value);
-          },
+          xPercent: -50,
+          duration: 60,
+          ease: "none",
         }
       );
-    });
-  
-    $(".rp-marquee-item").on("mouseleave", function () {
-      Qe.fromTo(
-        object,
-        {
-          value: 0,
-        },
-        {
-          value: 1,
-          duration: 1.2,
-          onUpdate: () => {
-            tlMarque.timeScale(object.value);
+    
+      $(".rp-marquee-item").on("mouseenter", function () {
+        Qe.fromTo(
+          object,
+          {
+            value: 1,
           },
-        }
-      );
-    });
+          {
+            value: 0,
+            duration: 1.2,
+            onUpdate: () => {
+              tlMarque.timeScale(object.value);
+            },
+          }
+        );
+      });
+    
+      $(".rp-marquee-item").on("mouseleave", function () {
+        Qe.fromTo(
+          object,
+          {
+            value: 0,
+          },
+          {
+            value: 1,
+            duration: 1.2,
+            onUpdate: () => {
+              tlMarque.timeScale(object.value);
+            },
+          }
+        );
+      });
+    }; 
+
+    logoMarquee();
 
     window.addEventListener("pagehide", function () {
         return window.scrollTo(0, 0);

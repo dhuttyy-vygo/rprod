@@ -397,3 +397,7 @@ a {
       display: none;
     }
     .splide *:focus { outline: none; }
+
+    .splide {
+      height: 50dvh;
+    }

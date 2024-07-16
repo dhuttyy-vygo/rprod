@@ -1,3 +1,24 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+}
+
+.w-lightbox-frame, .w-lightbox-embed {
+  width: 80vw;
+  max-width: 1600px;
+}
+
+.w-lightbox-close {
+  background-size: 35px;
+  height: 4em;
+  right: 1%;
+}
+
+a {
+  color: inherit;
+}
+
 .rp-video-modal {
   opacity: 0;
   visibility: hidden;
@@ -266,5 +287,17 @@ button, .track-progress, .prev-track, .next-track, .playpause-track, #dp-reserve
 
 #dp-video-content .close-btn {
   pointer-events: none;
+}
+
+.w-background-video > video {
+  max-width: -webkit-fill-available;
+}
+
+.splide__arrow.splide__arrow--next, .splide__arrow.splide__arrow--prev, .splide__pagination {
+  display: none;
+}
+
+.splide :focus {
+  outline: none;
 }
 /*# sourceMappingURL=app.css.map */

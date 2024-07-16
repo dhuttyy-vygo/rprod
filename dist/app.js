@@ -730,6 +730,20 @@ var Sc = (0, _scrollTrigger.ScrollTrigger);
             });
         // New code ends here
         });
+        $(".link_container").hover(function() {
+            let textOne = $(this).find(".link_textt").eq(0).text();
+            $(this).find(".link_textt.is--2").text(textOne);
+        });
+        $(".link_container").hover(function() {
+            $(this).find(".li_circle").toggleClass("selected-toggle");
+        });
+        $(".li-btn").hover(function() {
+            let textOne = $(this).find(".link_textt").eq(0).text();
+            $(this).find(".link_textt.is--2").text(textOne);
+        });
+        $(".li-btn").hover(function() {
+            $(this).closest(".li-btn").toggleClass("selected-toggle");
+        });
     });
     let object = {
         value: 1

@@ -1,3 +1,26 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; 
+  text-rendering: optimizeLegibility;
+}
+  .w-lightbox-frame, .w-lightbox-embed {
+    width: 80vw;
+    max-width: 1600px;
+    
+}
+  
+.w-lightbox-close {
+
+	right:1%;
+  	height: 4em;
+  	background-size: 35px;
+
+}
+
+a {
+	color: inherit;
+}
+
 .rp-video-modal {
     display: flex; /* Keep display property constant to allow transitions */
     opacity: 0;
@@ -366,3 +389,11 @@
     pointer-events: none;
   }
   
+  .w-background-video>video {   
+    max-width: -webkit-fill-available;
+    }
+    
+    .splide__arrow.splide__arrow--next, .splide__arrow.splide__arrow--prev, .splide__pagination {
+      display: none;
+    }
+    .splide *:focus { outline: none; }

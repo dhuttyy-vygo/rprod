@@ -707,24 +707,26 @@ var Sc = (0, _scrollTrigger.ScrollTrigger);
         });
     };
     var splideInit = ()=>{
-        const e = document.querySelector(".slide");
-        if (!e) return;
-        new (0, _splideDefault.default)(e, {
-            start: 0,
-            perPage: "auto",
-            perMove: 1,
-            autoplay: !1,
-            interval: 2500,
-            type: "loop",
-            focus: "left",
-            flickPower: 450,
-            autoHeight: !0,
-            breakpoints: {
-                767: {
-                    perPage: 1
+        const els = document.querySelectorAll(".splide");
+        if (!els.length) return;
+        els.forEach((t)=>{
+            new (0, _splideDefault.default)(t, {
+                start: 0,
+                perPage: "auto",
+                perMove: 1,
+                autoplay: !1,
+                interval: 2500,
+                type: "loop",
+                focus: "left",
+                flickPower: 450,
+                autoHeight: !0,
+                breakpoints: {
+                    767: {
+                        perPage: 1
+                    }
                 }
-            }
-        }).mount();
+            }).mount();
+        });
     };
     document.addEventListener("DOMContentLoaded", ()=>{
         navinit(), vimeoModal(), homeModal(), splideInit();

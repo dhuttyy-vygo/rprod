@@ -150,28 +150,34 @@ var Sc = ScrollTrigger;
 
 
       var splideInit = () => {
-        const e = document.querySelector(".slide");
+        const els = document.querySelectorAll(".splide");
         
-        if (!e) {
+        if (!els.length) {
           return;
         }
 
-        new Splide( e, {
-          start: 0,  
-          perPage: "auto",
-          perMove: 1,
-          autoplay: !1,
-          interval: 2500,
-          type   : 'loop',
-          focus  : 'left',
-          flickPower: 450 ,
-          autoHeight: !0,
-          breakpoints: {
-            767: {
-              perPage: 1,
+        els.forEach((t) => {
+
+          new Splide( t, {
+            start: 0,  
+            perPage: "auto",
+            perMove: 1,
+            autoplay: !1,
+            interval: 2500,
+            type   : 'loop',
+            focus  : 'left',
+            flickPower: 450 ,
+            autoHeight: !0,
+            breakpoints: {
+              767: {
+                perPage: 1,
+              }
             }
-          }
-        } ).mount();
+          } ).mount();
+
+        })
+
+        
       }
   
     document.addEventListener("DOMContentLoaded", () => {

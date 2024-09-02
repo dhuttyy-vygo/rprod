@@ -167,6 +167,7 @@ var Sc = ScrollTrigger;
             type   : 'loop',
             focus  : 'left',
             flickPower: 450 ,
+            pagination: false,
             autoHeight: !0,
             breakpoints: {
               767: {
